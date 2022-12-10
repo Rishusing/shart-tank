@@ -2,6 +2,12 @@ const express = require('express')
 const Entrepreneur = require('../models/entrepreneur')
 const router = new express.Router()
 
+const cors = require('cors')
+
+router.use(cors({
+    origin: ['http://localhost:3000']
+}));
+
 router.post('/createentrepreneur', async(req, res) => {
 
     const entrepreneur = new Entrepreneur({

@@ -2,6 +2,11 @@
 const express = require('express')
 const Pitch = require('../models/pitches')
 const router = new express.Router()
+const cors = require('cors')
+
+router.use(cors({
+    origin: ['http://localhost:3000']
+}));
 
 router.post('/createpitch', async (req, res) => {
 

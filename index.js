@@ -15,7 +15,10 @@ app.use(express.json())
 app.use(entrepreneurRouter)
 app.use(investorRouter)
 app.use(pitchRouter)
-app.use(cors())
+
+app.use(cors({
+    origin: ['http://localhost:3000']
+}));
 
 app.get('/', (req, res) => {
   res.send({ msg: 'Hey congratulations, we are connected' })

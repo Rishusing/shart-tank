@@ -3,7 +3,11 @@ const express = require('express')
 const Investor = require('../models/investor')
 const router = new express.Router()
 
+const cors = require('cors')
 
+router.use(cors({
+    origin: ['http://localhost:3000']
+}));
 
 router.post('/createinvestor', async(req, res) => {
 
