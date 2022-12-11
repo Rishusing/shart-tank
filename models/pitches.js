@@ -17,6 +17,16 @@ const pitchSchema = new mongoose.Schema(
     equity: {
       type: String,
     },
+    likes: [
+      {
+        likerId: {
+          type:String,
+        },
+        likerName: {
+          type:String,
+        }
+      }
+    ],
     offers: [
       {
         investorId: {

@@ -22,8 +22,22 @@ const entrepreneurSchema = new mongoose.Schema({
     avatar: {
         type: String,
         default : 'http://bit.ly/3Pd3qh0'
-    }
-    
+    },
+    profile: {
+      type: String,
+      default: 'entrepreneur',
+    },
+    followers: [
+        {
+            followerId: {
+                type : String
+            },
+            followerName: {
+                type : String
+            }
+        }
+    ]
+
 },{
     timestamps:true
 })

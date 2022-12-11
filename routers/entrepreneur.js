@@ -8,7 +8,7 @@ router.use(cors({
     origin: ['http://localhost:3000']
 }));
 
-router.post('/createentrepreneur', async(req, res) => {
+router.post('/createentrepreneur', async (req, res) => {
 
     const entrepreneur = new Entrepreneur({
         _id: req.body.id,
@@ -19,8 +19,6 @@ router.post('/createentrepreneur', async(req, res) => {
         industry: req.body.industry
     });
 
-    // console.log(entrepreneur);
-
     try {
 
         await entrepreneur.save()
@@ -28,7 +26,7 @@ router.post('/createentrepreneur', async(req, res) => {
 
     } catch (e) {
 
-        res.status(400).send("Something wrong");
+        res.status(400).send(e);
         
     }
 
@@ -49,6 +47,53 @@ router.get('/entrepreneur/:id', async (req, res) => {
 
     }catch(e){
         res.status(500).send()
+    }
+})
+
+router.post('/entrepreneur/update', async (req, res) => {
+    try {
+        const entrepreneur = await Entrepreneur.findOne({ _id: req.body.id })
+        if (req.body.name) {
+            entrepreneur.name = req.body.name;
+        }
+        if (req.body.phone) {
+            entrepreneur.phone = req.body.phone;
+        }
+        if (req.body.industry) {
+            entrepreneur.industry = req.body.industry;
+        }
+        if (req.body.companyname) {
+            entrepreneur.companyname = req.body.companyname;
+        }
+        if (req.body.avatar) {
+            entrepreneur.avatar = req.body.avatar;
+        }
+
+        await entrepreneur.save();
+        res.status(200).send(entrepreneur)
+    }
+    catch (e) {
+        res.status(404).send(e)
+    }
+})
+
+router.post('/entrepreneur/follow', async (req, res) => {
+
+    const entrepreneur = await Entrepreneur.findOne({ _id: req.body.entrepreneurId })
+    
+    const follow = {
+        followerId: req.body.followerId,
+        followerName: req.body.followerName
+    }
+
+    entrepreneur.followers.push(follow)
+
+    try {
+        await entrepreneur.save()
+        res.status(201).send(entrepreneur)
+    }
+    catch (e) {
+        res.status(400).send(e);
     }
 })
 

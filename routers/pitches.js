@@ -50,10 +50,32 @@ router.post('/offer', async (req, res) => {
 
 })
 
+router.post('/pitches/like', async (req, res) => {
+
+    const pitch = await Pitch.findOne({ _id: req.body.pitchId })
+    
+    const like = {
+        likerId: req.body.likerId,
+        likerName: req.body.likerName
+    }
+
+    pitch.likes.push(like)
+
+    try {
+        await pitch.save()
+        res.status(201).send(pitch)
+    }
+    catch (e) {
+        res.status(400).send(e);
+    }
+
+})
+
 router.get('/pitches', async (req, res) => {
     
     const allPitches = await Pitch.find({});
     res.send(allPitches);
+
 })
 
 module.exports = router;

@@ -9,8 +9,8 @@ router.use(cors({
     origin: ['http://localhost:3000']
 }));
 
-router.post('/createinvestor', async(req, res) => {
-
+router.post('/createinvestor', async (req, res) => {
+    
     const investor = new Investor({
         _id: req.body.id,
         email: req.body.email,
@@ -50,5 +50,51 @@ router.get('/investor/:id', async (req, res) => {
     }
 })
 
+router.post('/investor/update', async (req, res) => {
+
+    try {
+        const investor = await Investor.findOne({ _id: req.body.id })
+        if (req.body.name) {
+            investor.name = req.body.name;
+        }
+        if (req.body.phone) {
+            investor.phone = req.body.phone;
+        }
+        if (req.body.companyname) {
+            investor.companyname = req.body.companyname;
+        }
+        if (req.body.avatar) {
+            investor.avatar = req.body.avatar;
+        }
+
+        await investor.save();
+        res.status(200).send(investor)
+    }
+    catch (e) {
+        res.status(404).send(e)
+    }
+    
+})
+
+
+router.post('/investor/follow', async (req, res) => {
+
+    const investor = await Investor.findOne({ _id: req.body.investorId })
+    
+    const follow = {
+        followerId: req.body.followerId,
+        followerName: req.body.followerName
+    }
+
+    investor.followers.push(follow)
+
+    try {
+        await investor.save()
+        res.status(201).send(investor)
+    }
+    catch (e) {
+        res.status(400).send(e);
+    }
+})
 
 module.exports = router
