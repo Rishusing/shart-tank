@@ -6,6 +6,7 @@ require('dotenv').config()
 const entrepreneurRouter = require('./routers/entrepreneur')
 const investorRouter = require('./routers/investor')
 const pitchRouter = require('./routers/pitches')
+const userRouter = require('./routers/user')
 
 const app = express()
 
@@ -15,15 +16,18 @@ app.use(express.json())
 app.use(entrepreneurRouter)
 app.use(investorRouter)
 app.use(pitchRouter)
+app.use(userRouter)
 
-app.use(cors({
-    origin: ['http://localhost:3000']
-}));
+app.use(
+  cors({
+    origin: '*',
+  }),
+)
 
 app.get('/', (req, res) => {
   res.send({ msg: 'Hey congratulations, we are connected' })
 })
 
-app.listen(8000, () => {
+app.listen(process.env.PORT, () => {
   console.log('Server is up on port ' + port)
 })
