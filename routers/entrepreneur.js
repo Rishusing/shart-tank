@@ -47,30 +47,4 @@ router.get('/entrepreneur/:id', async (req, res) => {
   }
 })
 
-router.post('/entrepreneur/update', async (req, res) => {
-  try {
-    const entrepreneur = await User.findOne({ _id: req.body.id })
-    if (req.body.name) {
-      entrepreneur.name = req.body.name
-    }
-    if (req.body.phone) {
-      entrepreneur.phone = req.body.phone
-    }
-    if (req.body.industry) {
-      entrepreneur.industry = req.body.industry
-    }
-    if (req.body.companyname) {
-      entrepreneur.companyname = req.body.companyname
-    }
-    if (req.body.avatar) {
-      entrepreneur.avatar = req.body.avatar
-    }
-
-    await entrepreneur.save()
-    res.status(200).send(entrepreneur)
-  } catch (e) {
-    res.status(404).send(e)
-  }
-})
-
 module.exports = router

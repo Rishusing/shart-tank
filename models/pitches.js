@@ -30,12 +30,6 @@ const pitchSchema = new mongoose.Schema(
       {
         likerId: {
           type:String,
-        },
-        likerName: {
-          type:String,
-        },
-        likerAvatar: {
-          type:String,
         }
       }
     ],

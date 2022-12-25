@@ -51,30 +51,5 @@ router.get('/investor/:id', async (req, res) => {
     }
 })
 
-router.post('/investor/update', async (req, res) => {
-
-    try {
-        const investor = await User.findOne({ _id: req.body.id })
-        if (req.body.name) {
-            investor.name = req.body.name;
-        }
-        if (req.body.phone) {
-            investor.phone = req.body.phone;
-        }
-        if (req.body.companyname) {
-            investor.companyname = req.body.companyname;
-        }
-        if (req.body.avatar) {
-            investor.avatar = req.body.avatar;
-        }
-
-        await investor.save();
-        res.status(200).send(investor)
-    }
-    catch (e) {
-        res.status(404).send(e)
-    }
-    
-})
 
 module.exports = router

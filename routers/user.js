@@ -1,5 +1,6 @@
 const express = require('express')
 const User = require('../models/user')
+const Pitch = require('../models/pitches')
 const router = new express.Router()
 
 const cors = require('cors')
@@ -31,7 +32,7 @@ router.get('/messages/:id', async (req, res) => {
 
   try {
     const messages = await User.findOne({ _id: ID }).select('messages')
-    
+
     res.send(messages)
   } catch (e) {
     res.status(500).send({ error: 'user not found' })
@@ -85,6 +86,25 @@ router.post('/user/notify', async (req, res) => {
     res.status(201).send({ success: 'success' })
   } catch (e) {
     res.status(400).send(e)
+  }
+})
+
+router.post('/user/update', async (req, res) => {
+  try {
+    const user = await User.findOne({ _id: req.body.id })
+
+    user.name = req.body.name;
+    user.phone = req.body.phone;
+    user.companyname = req.body.companyname;
+    user.avatar = req.body.avatar;
+
+    await Pitch.updateMany({ entrepreneurId: req.body.id }, { entrepreneurName: req.body.name, entrepreneurAvatar: req.body.avatar }, { multi: true });
+
+    await user.save();
+    res.status(200).send(user)
+  }
+  catch (e) {
+    res.status(404).send(e)
   }
 })
 

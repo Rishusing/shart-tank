@@ -93,14 +93,12 @@ router.get('/singlepitche/:id', async (req, res) => {
 
 })
 
-
 router.post('/pitches/like', async (req, res) => {
 
     const pitch = await Pitch.findOne({ _id: req.body.pitchId })
 
     const like = {
-        likerId: req.body.likerId,
-        likerName: req.body.likerName
+        likerId: req.body.likerId
     }
 
     pitch.likes.push(like)
