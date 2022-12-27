@@ -166,7 +166,7 @@ router.get('/findcomment/:id', async (req, res) => {
 
 router.get('/pitches', async (req, res) => {
 
-    const allPitches = await Pitch.find({});
+    const allPitches = await Pitch.find({}).sort({ $natural: -1 });
     res.send(allPitches);
 
 })
