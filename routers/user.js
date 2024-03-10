@@ -26,6 +26,19 @@ router.get('/user/:id', async (req, res) => {
   }
 })
 
+router.get('/custom_user/:id', async (req, res) => {
+  try {
+    const user = await User.findOne({ _id: req.params.id }, 'name companyname profile avatar')
+
+    if (!user) {
+      return res.status(404).send({ msg: 'user Not Found' })
+    }
+    res.send(user)
+  } catch (e) {
+    res.status(500).send({ error: 'user not found' })
+  }
+})
+
 
 router.get('/messages/:id', async (req, res) => {
   const ID = req.params.id
@@ -108,4 +121,14 @@ router.post('/user/update', async (req, res) => {
   }
 })
 
-module.exports = router
+router.get('/finduser/:subname', async (req, res) => {
+  try {
+    const users = await User.find({ name: { $regex: req.params.subname, $options: 'i' } })
+    res.status(200).send(users)
+  }
+  catch (e) {
+    res.status(404).send(e)
+  }
+})
+
+module.exports = router;

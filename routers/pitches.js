@@ -177,8 +177,8 @@ router.get('/pitchlimit', async (req, res) => {
     console.log(query)
 
     const allPitches = await Pitch.find({}).sort({ $natural: -1 }).limit(query.limit).skip(query.skip);
-
     res.status(200).send(allPitches);
+    
 })
 
 module.exports = router;
