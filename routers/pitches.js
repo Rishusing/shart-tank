@@ -32,7 +32,7 @@ router.post('/createpitch', async (req, res) => {
 
 router.post('/pitches/offer', async (req, res) => {
 
-    
+
     const pitch = await Pitch.findOne({ _id: req.body.pitchId })
 
     const Offer = {
@@ -57,38 +57,38 @@ router.post('/pitches/offer', async (req, res) => {
 })
 
 router.get('/findoffers/:id', async (req, res) => {
-    
+
     try {
         const pitch = await Pitch.findOne({ _id: req.params.id });
         res.send(pitch.offers);
     }
     catch (e) {
-        res.send({ msg : "something wrong while getting offer" });
+        res.send({ msg: "something wrong while getting offer" });
     }
 
 })
 
 
 router.get('/findpitches/:id', async (req, res) => {
-    
+
     try {
         const pitches = await Pitch.find({ entrepreneurId: req.params.id });
         res.send(pitches);
     }
     catch (e) {
-        res.send({ msg : "something wrong while getting offer" });
+        res.send({ msg: "something wrong while getting offer" });
     }
 
 })
 
 router.get('/singlepitche/:id', async (req, res) => {
-    
+
     try {
         const pitch = await Pitch.findOne({ _id: req.params.id });
         res.send(pitch);
     }
     catch (e) {
-        res.send({ msg : "something wrong while getting offer" });
+        res.send({ msg: "something wrong while getting offer" });
     }
 
 })
@@ -146,7 +146,7 @@ router.get('/totalpitches', async (req, res) => {
         res.send({ totalpitches });
     }
     catch (e) {
-        res.send({ msg : "something wrong while fetching pitchcount" });
+        res.send({ msg: "something wrong while fetching pitchcount" });
     }
 
 })
@@ -155,11 +155,11 @@ router.get('/findcomment/:id', async (req, res) => {
     // console.log(req.params.id);
     try {
         const pitch = await Pitch.findOne({ _id: req.params.id });
-        
+
         res.send(pitch.comments);
     }
     catch (e) {
-        res.send({ msg : "something wrong while getting error" });
+        res.send({ msg: "something wrong while getting error" });
     }
 
 })
@@ -174,11 +174,11 @@ router.get('/pitches', async (req, res) => {
 router.get('/pitchlimit', async (req, res) => {
 
     const query = req.query
-    console.log(query)
+    // console.log(query)
 
     const allPitches = await Pitch.find({}).sort({ $natural: -1 }).limit(query.limit).skip(query.skip);
     res.status(200).send(allPitches);
-    
+
 })
 
 module.exports = router;
