@@ -27,11 +27,11 @@ app.use(pitchRouter)
 app.use(userRouter)
 app.use(chatEngineRouter)
 
-app.use(
-  cors({
-    origin: '*',
-  }),
-)
+// app.use(
+//   cors({
+//     origin: '*',
+//   }),
+// )
 
 
 io.on("connection", (socket) => {
