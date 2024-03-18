@@ -4,7 +4,11 @@ require('./db/mongoose')
 require('dotenv').config()
 const app = express()
 const server = require('http').createServer(app);
+const Messages = require('./models/messages')
+
+
 const io = require('socket.io')(server, {
+  pingTimeout: 60000,
   cors: {
     origin: "*",
     methods: ["GET", "POST"]
@@ -42,8 +46,10 @@ io.on("connection", (socket) => {
 
   socket.on("sendMessage", (payload) => {
     // console.log(payload);
-    const sendPayload = { senderId: payload.senderId, text: payload.text }
-    io.emit(payload.receiverId, sendPayload)
+    // const sendPayload = { senderId: payload.senderId, content: payload.text }
+    const message = new Messages({ conversationId: payload.conversationId, senderId: payload.senderId, receiverId: payload.receiverId, content: payload.content })
+    message.save();
+    io.emit(payload.receiverId, payload)
   })
 
 });
