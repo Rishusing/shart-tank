@@ -52,6 +52,10 @@ io.on("connection", (socket) => {
     io.emit(payload.receiverId, payload)
   })
 
+  socket.on("check_typing", ({ room, istyping }) => {
+    io.emit("check_typing" + room)
+  });
+
 });
 
 
