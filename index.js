@@ -8,7 +8,6 @@ const Messages = require('./models/messages')
 
 
 const io = require('socket.io')(server, {
-  pingTimeout: 60000,
   cors: {
     origin: "*",
     methods: ["GET", "POST"]
